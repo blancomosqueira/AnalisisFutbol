@@ -23,4 +23,15 @@ public class JugadorViewModel extends AndroidViewModel {
         repository.obtenerJugadoresPorEquipo(getApplication().getApplicationContext(), equipoId, jugadores);
         return jugadores;
     }
+    public LiveData<Boolean> eliminarJugador(int jugadorId) {
+        MutableLiveData<Boolean> result = new MutableLiveData<>();
+        repository.eliminarJugador(getApplication().getApplicationContext(), jugadorId, result);
+        return result;
+    }
+    public LiveData<Boolean> agregarJugador(String nombre, int equipoId) {
+        MutableLiveData<Boolean> result = new MutableLiveData<>();
+        repository.agregarJugador(getApplication().getApplicationContext(), nombre, equipoId, result);
+        return result;
+    }
+
 }

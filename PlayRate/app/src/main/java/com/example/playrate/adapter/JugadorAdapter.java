@@ -14,9 +14,15 @@ import java.util.List;
 public class JugadorAdapter extends RecyclerView.Adapter<JugadorAdapter.JugadorViewHolder> {
 
     private List<Jugador> jugadores;
+    private OnItemLongClickListener longClickListener;
 
-    public JugadorAdapter() {
+    public interface OnItemLongClickListener {
+        void onItemLongClick(Jugador jugador);
+    }
+
+    public JugadorAdapter(OnItemLongClickListener longClickListener) {
         this.jugadores = new ArrayList<>();
+        this.longClickListener = longClickListener;
     }
 
     @NonNull
@@ -31,6 +37,11 @@ public class JugadorAdapter extends RecyclerView.Adapter<JugadorAdapter.JugadorV
         Jugador jugador = jugadores.get(position);
         holder.tvNombreJugador.setText(jugador.getNombre());
         holder.tvValoracion.setText("Valoración: " + jugador.getValoracionMedia());
+
+        holder.itemView.setOnLongClickListener(v -> {
+            longClickListener.onItemLongClick(jugador);
+            return true;
+        });
     }
 
     @Override
