@@ -11,7 +11,15 @@ public class Jugador {
         this.valoracionMedia = valoracionMedia;
     }
 
-    public int getId() { return id; }
-    public String getNombre() { return nombre; }
-    public float getValoracionMedia() { return valoracionMedia; }
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public float getValoracionMedia() {
+        return valoracionMedia;
+    }
 }

@@ -26,7 +26,8 @@ public class EquipoViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<List<Equipo>> getEquipos() {
-        System.out.println("EquipoViewModel: Retornando equipos...");
+        cargarEquipos(getApplication());
         return equipos;
     }
+
 }

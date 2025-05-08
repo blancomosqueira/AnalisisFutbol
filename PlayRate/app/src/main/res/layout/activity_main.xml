@@ -19,10 +19,16 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp" />
 
-    <TextView
-        android:id="@+id/tv_jugadores"
+    <Button
+        android:id="@+id/btnAddEquipo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Jugadores guardados aparecerán aquí"
-        android:textSize="16sp" />
+        android:text="Añadir Equipo"
+        android:layout_marginTop="16dp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewEquipos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -25,6 +25,10 @@
         <activity
             android:name=".view.AddJugadorActivity"
             android:exported="true" />
+        <activity
+            android:name=".view.AddEquipoActivity"
+            android:exported="true" />
+        <activity android:name=".view.EquipoDetailActivity" />
     </application>
 
 
