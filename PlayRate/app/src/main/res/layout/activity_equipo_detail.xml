@@ -7,28 +7,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lista de Equipos"
+        android:text="Jugadores del Equipo"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:paddingBottom="8dp" />
+        android:padding="8dp" />
 
     <Button
-        android:id="@+id/btn_agregar_jugador"
-        android:text="Agregar Jugador"
+        android:id="@+id/btnAddJugador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Añadir Jugador"
         android:layout_marginBottom="16dp" />
 
-    <Button
-        android:id="@+id/btnAddEquipo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Añadir Equipo"
-        android:layout_marginTop="16dp" />
-
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewEquipos"
+        android:id="@+id/recyclerViewJugadores"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

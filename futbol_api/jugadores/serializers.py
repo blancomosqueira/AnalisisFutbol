@@ -1,12 +1,14 @@
 from rest_framework import serializers
-from .models import Jugador, Evaluacion
+from .models import Jugador, Equipo
 
+# Serializer para Jugador
 class JugadorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jugador
         fields = '__all__'
 
-class EvaluacionSerializer(serializers.ModelSerializer):
+# Serializer para Equipo
+class EquipoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Evaluacion
+        model = Equipo
         fields = '__all__'
