@@ -11,10 +11,13 @@
         android:layout_height="wrap_content" />
 
     <Spinner
-        android:id="@+id/spinner_equipos"
-        android:layout_width="match_parent"
+        android:id="@+id/spinnerEquipos"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="8dp"
+        android:spinnerMode="dropdown" />
 
     <Button
         android:id="@+id/btn_guardar_jugador"

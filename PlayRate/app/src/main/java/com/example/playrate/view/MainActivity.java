@@ -1,25 +1,24 @@
 package com.example.playrate.view;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.example.playrate.R;
-import com.example.playrate.viewmodel.JugadorViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private JugadorViewModel jugadorViewModel;
+    private Button btnAgregarJugador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        jugadorViewModel = new ViewModelProvider(this).get(JugadorViewModel.class);
-        jugadorViewModel.getJugadores().observe(this, jugadores -> {
-            Toast.makeText(this, "Jugadores cargados: " + jugadores.size(), Toast.LENGTH_SHORT).show();
+        btnAgregarJugador = findViewById(R.id.btn_agregar_jugador);
+        btnAgregarJugador.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddJugadorActivity.class);
+            startActivity(intent);
         });
     }
 }
