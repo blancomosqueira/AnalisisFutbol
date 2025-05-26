@@ -29,6 +29,9 @@
             android:name=".view.AddEquipoActivity"
             android:exported="true" />
         <activity android:name=".view.EquipoDetailActivity" />
+        <activity android:name=".view.EvaluacionJugadorActivity" />
+        <activity android:name=".view.JugadorDetailActivity" />
+        <activity android:name=".view.EditarValoracionActivity" />
     </application>
 
 

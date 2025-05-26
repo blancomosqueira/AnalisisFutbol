@@ -27,6 +27,7 @@ public class AddJugadorActivity extends AppCompatActivity {
     private EditText et_nombre_jugador;
     private Spinner spinnerEquipos;
     private Button btn_guardar_jugador;
+    private Button btn_evaluar;
     private List<Equipo> listaEquipos = new ArrayList<>();
     private EquipoViewModel equipoViewModel;
     private JugadorViewModel jugadorViewModel;
@@ -38,6 +39,7 @@ public class AddJugadorActivity extends AppCompatActivity {
 
         spinnerEquipos = findViewById(R.id.spinnerEquipos);
         btn_guardar_jugador = findViewById(R.id.btn_guardar_jugador);
+        btn_evaluar = findViewById(R.id.btn_evaluar_jugador);
         et_nombre_jugador = findViewById(R.id.et_nombre_jugador);
         jugadorViewModel = new ViewModelProvider(this).get(JugadorViewModel.class);
 
@@ -46,8 +48,12 @@ public class AddJugadorActivity extends AppCompatActivity {
         int equipoId = getIntent().getIntExtra("equipo_id", -1);
 
         equipoViewModel = new ViewModelProvider(this).get(EquipoViewModel.class);
-        cargarEquipos(equipoId);  // Pasar el ID para preselección
-
+        cargarEquipos(equipoId);
+        // Pasar el ID para preselección
+        btn_evaluar.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EvaluacionJugadorActivity.class);
+            startActivity(intent);
+        });
         btn_guardar_jugador.setOnClickListener(v -> guardarJugador());
     }
 

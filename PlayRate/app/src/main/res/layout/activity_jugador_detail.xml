@@ -5,30 +5,24 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/tvJugadorNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lista de Equipos"
+        android:text="Nombre del Jugador"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:paddingBottom="8dp" />
 
-    <Button
-        android:id="@+id/btnAddJugador"
-        android:text="Agregar Jugador"
+    <TextView
+        android:id="@+id/tvValoraciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp" />
+        android:text="Valoraciones"
+        android:textSize="16sp"
+        android:paddingBottom="16dp" />
 
     <Button
-        android:id="@+id/btnAddEquipo"
+        android:id="@+id/btnEditarValoracion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Añadir Equipo"
-        android:layout_marginTop="16dp" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewEquipos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:text="Editar Valoración" />
 </LinearLayout>

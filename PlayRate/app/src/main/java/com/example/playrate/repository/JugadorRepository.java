@@ -1,6 +1,8 @@
 package com.example.playrate.repository;
 
 import android.content.Context;
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -66,5 +68,27 @@ public class JugadorRepository {
 
         VolleySingleton.getInstance(context).getRequestQueue().add(request);
     }
+    public void actualizarValoracion(Context context, int jugadorId, Map<String, Integer> valoraciones, MutableLiveData<Boolean> result) {
+        String url = "http://10.0.2.2:8000/api/jugadores/" + jugadorId + "/valoracion/";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                response -> result.postValue(true),
+                error -> {
+                    result.postValue(false);
+                    Log.e("JugadorRepository", "Error al guardar valoraciones: " + error.getMessage());
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                for (Map.Entry<String, Integer> entry : valoraciones.entrySet()) {
+                    params.put(entry.getKey(), String.valueOf(entry.getValue()));
+                }
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
 
 }
