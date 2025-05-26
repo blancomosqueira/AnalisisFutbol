@@ -11,9 +11,13 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.playrate.R;
 import com.example.playrate.adapter.JugadorAdapter;
+import com.example.playrate.adapter.OnItemLongClickListener;
+import com.example.playrate.model.Jugador;
 import com.example.playrate.viewmodel.JugadorViewModel;
+import java.util.ArrayList;
+import java.util.List;
 
-public class EquipoDetailActivity extends AppCompatActivity {
+public class EquipoDetailActivity extends AppCompatActivity implements OnItemLongClickListener {
 
     private RecyclerView recyclerViewJugadores;
     private JugadorAdapter jugadorAdapter;
@@ -33,7 +37,8 @@ public class EquipoDetailActivity extends AppCompatActivity {
 
         recyclerViewJugadores.setLayoutManager(new LinearLayoutManager(this));
 
-        jugadorAdapter = new JugadorAdapter(jugador -> showDeleteDialog(jugador.getId()));
+        // Inicializar el adaptador pasando el contexto y el listener
+        jugadorAdapter = new JugadorAdapter(this, new ArrayList<>(), this);
         recyclerViewJugadores.setAdapter(jugadorAdapter);
 
         jugadorViewModel = new ViewModelProvider(this).get(JugadorViewModel.class);
@@ -50,15 +55,21 @@ public class EquipoDetailActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
-            cargarJugadores();  // Refrescar la lista de jugadores al volver
+            cargarJugadores();
         }
     }
+
     private void cargarJugadores() {
         jugadorViewModel.getJugadoresPorEquipo(equipoId).observe(this, jugadores -> {
             if (jugadores != null) {
                 jugadorAdapter.setJugadores(jugadores);
             }
         });
+    }
+
+    @Override
+    public void onItemLongClick(Jugador jugador) {
+        showDeleteDialog(jugador.getId());
     }
 
     private void showDeleteDialog(int jugadorId) {

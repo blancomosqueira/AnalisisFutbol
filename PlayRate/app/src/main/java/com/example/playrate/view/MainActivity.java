@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private EquipoAdapter equipoAdapter;
     private EquipoViewModel equipoViewModel;
     private Button btnAddEquipo;
+    private Button btnAddJugador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerViewEquipos = findViewById(R.id.recyclerViewEquipos);
         btnAddEquipo = findViewById(R.id.btnAddEquipo);
+        btnAddJugador = findViewById(R.id.btnAddJugador);
+
+        btnAddJugador.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddJugadorActivity.class);
+            startActivity(intent);
+        });
 
         recyclerViewEquipos.setLayoutManager(new LinearLayoutManager(this));
         equipoAdapter = new EquipoAdapter(new ArrayList<>(), equipo -> {

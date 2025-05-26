@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.playrate.model.Jugador;
 import com.example.playrate.repository.JugadorRepository;
 import java.util.List;
+import java.util.Map;
 
 public class JugadorViewModel extends AndroidViewModel {
 
@@ -33,5 +34,11 @@ public class JugadorViewModel extends AndroidViewModel {
         repository.agregarJugador(getApplication().getApplicationContext(), nombre, equipoId, result);
         return result;
     }
+    public LiveData<Boolean> actualizarValoracion(int jugadorId, Map<String, Integer> valoraciones) {
+        MutableLiveData<Boolean> result = new MutableLiveData<>();
+        repository.actualizarValoracion(getApplication().getApplicationContext(), jugadorId, valoraciones, result);
+        return result;
+    }
+
 
 }
