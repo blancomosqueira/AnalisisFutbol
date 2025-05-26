@@ -1,3 +1,4 @@
+
 # ⚽ Evaluador Táctico de Jugadores
 
 **Transforma la forma en que evalúas a tus futbolistas.**  
@@ -72,16 +73,49 @@ Esta app está en continuo crecimiento. Próximas funciones:
 
 ---
 
-## 📸 Capturas (próximamente)
+## 🛠️ Tecnologías empleadas
 
-> 📌 *“Lo que no se puede medir, no se puede mejorar.”*  
-> Esta app te permite medir. Y por tanto, mejorar.
+### Frontend (App Android)
+- **Java**
+- **Android Studio**
+- **MVVM**
+- Librerías:
+  - Volley
+  - LiveData / ViewModel
+  - RecyclerView
+
+### Backend (Django REST)
+- **Python 3.8**
+- **Django Rest Framework**
+- **SQLite** como base de datos
+- Comunicación vía API REST en JSON
+
+---
+
+## 🧪 Pasos para probar la aplicación
+
+### Backend (Django)
+1. Clona el repositorio
+2. Instala las dependencias:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Ejecuta el servidor:
+   ```bash
+   python manage.py runserver
+   ```
+
+> ⚠️ Asegúrate de que el backend se ejecuta en `http://10.0.2.2:8000` para ser accesible desde el emulador Android.
+
+### Frontend (Android)
+1. Abre el proyecto en Android Studio
+2. Conecta un emulador o dispositivo físico (Android 7.0+)
+3. Compila y lanza la app
+4. Prueba la creación de equipos, jugadores y evaluaciones tácticas
 
 ---
 
 ## 💬 Contacto
 
-Diego Blanco Mosqueira
+Diego Blanco Mosqueira  
 blancomosqueira@gmail.com
-
----
