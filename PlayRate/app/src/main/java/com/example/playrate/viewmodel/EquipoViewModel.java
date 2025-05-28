@@ -3,6 +3,7 @@ package com.example.playrate.viewmodel;
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.playrate.model.Equipo;
 import com.example.playrate.repository.EquipoRepository;
@@ -29,5 +30,11 @@ public class EquipoViewModel extends AndroidViewModel {
         cargarEquipos(getApplication());
         return equipos;
     }
+    public LiveData<Boolean> eliminarEquipo(int equipoId) {
+        MutableLiveData<Boolean> result = new MutableLiveData<>();
+        repository.eliminarEquipo(getApplication().getApplicationContext(), equipoId, result);
+        return result;
+    }
+
 
 }
