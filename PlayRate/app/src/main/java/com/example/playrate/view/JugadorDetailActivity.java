@@ -7,9 +7,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.playrate.R;
 import com.example.playrate.model.Jugador;
+import com.example.playrate.utils.VolleySingleton;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class JugadorDetailActivity extends AppCompatActivity {
@@ -43,6 +48,39 @@ public class JugadorDetailActivity extends AppCompatActivity {
             intent.putExtra("jugador_id", jugador.getId());
             startActivity(intent);
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recargarEvaluaciones();
+    }
+    private void recargarEvaluaciones() {
+        int jugadorId = jugador.getId();  // Usa el ID actual
+
+        String url = "http://10.0.2.2:8000/api/jugadores/" + jugadorId + "/evaluaciones/";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    Map<String, Integer> evaluaciones = new HashMap<>();
+                    Iterator<String> keys = response.keys();
+                    while (keys.hasNext()) {
+                        String key = keys.next();
+                        try {
+                            evaluaciones.put(key, response.getInt(key));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    jugador.setEvaluaciones(evaluaciones);
+                    mostrarInformacionJugador();  // vuelve a actualizar la vista
+                },
+                error -> {
+                    error.printStackTrace();
+                    Toast.makeText(this, "Error al recargar evaluaciones", Toast.LENGTH_SHORT).show();
+                });
+
+        VolleySingleton.getInstance(this).getRequestQueue().add(request);
     }
 
     private void mostrarInformacionJugador() {
