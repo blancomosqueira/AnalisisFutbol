@@ -2,6 +2,7 @@ package com.example.playrate.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import com.example.playrate.model.Equipo;
 import com.example.playrate.utils.VolleySingleton;
 import com.example.playrate.viewmodel.EquipoViewModel;
 import com.example.playrate.viewmodel.JugadorViewModel;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +42,7 @@ public class AddJugadorActivity extends AppCompatActivity {
 
         spinnerEquipos = findViewById(R.id.spinnerEquipos);
         btn_guardar_jugador = findViewById(R.id.btn_guardar_jugador);
-        btn_evaluar = findViewById(R.id.btn_evaluar_jugador);
+
         et_nombre_jugador = findViewById(R.id.et_nombre_jugador);
         jugadorViewModel = new ViewModelProvider(this).get(JugadorViewModel.class);
 
@@ -50,11 +53,8 @@ public class AddJugadorActivity extends AppCompatActivity {
         equipoViewModel = new ViewModelProvider(this).get(EquipoViewModel.class);
         cargarEquipos(equipoId);
         // Pasar el ID para preselección
-        btn_evaluar.setOnClickListener(v -> {
-            Intent intent = new Intent(this, EvaluacionJugadorActivity.class);
-            startActivity(intent);
-        });
-        btn_guardar_jugador.setOnClickListener(v -> guardarJugador());
+
+        btn_guardar_jugador.setOnClickListener(v -> guardarJugadorYEvaluar());
     }
 
     private void cargarEquipos(int equipoId) {
@@ -85,7 +85,7 @@ public class AddJugadorActivity extends AppCompatActivity {
 
 
 
-    private void guardarJugador() {
+    private void guardarJugadorYEvaluar() {
         String nombre = et_nombre_jugador.getText().toString().trim();
 
         if (nombre.isEmpty()) {
@@ -101,20 +101,53 @@ public class AddJugadorActivity extends AppCompatActivity {
 
         int equipoId = equipoViewModel.getEquipos().getValue().get(selectedPosition).getId();
 
-        jugadorViewModel.agregarJugador(nombre, equipoId).observe(this, success -> {
-            if (success) {
-                Toast.makeText(this, "Jugador añadido", Toast.LENGTH_SHORT).show();
-                // Devolver resultado exitoso
-                Intent resultIntent = new Intent();
-                setResult(RESULT_OK, resultIntent);
-                finish();
-            } else {
-                Toast.makeText(this, "Error al añadir jugador", Toast.LENGTH_SHORT).show();
+        String url = "http://10.0.2.2:8000/api/jugadores/";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                response -> {
+                    try {
+                        // DEBUG: mostrar respuesta recibida
+                        Log.d("RESPUESTA", response);
+
+                        JSONObject obj = new JSONObject(response);
+                        int jugadorId = obj.getInt("id");
+
+                        Toast.makeText(this, "Jugador añadido", Toast.LENGTH_SHORT).show();
+
+                        // Lanzar EvaluacionJugadorActivity con el ID recibido
+                        Intent intent = new Intent(this, EvaluacionJugadorActivity.class);
+                        intent.putExtra("jugador_id", jugadorId);
+                        setResult(RESULT_OK);
+                        startActivity(intent);
+                        finish();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "Error al procesar respuesta", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> {
+                    error.printStackTrace();
+                    Toast.makeText(this, "Error al añadir jugador", Toast.LENGTH_SHORT).show();
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("nombre", nombre);
+                params.put("equipo", String.valueOf(equipoId));
+                return params;
             }
-        });
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                return headers;
+            }
+        };
+
+        VolleySingleton.getInstance(this).getRequestQueue().add(request);
     }
-
-
 
 
 }

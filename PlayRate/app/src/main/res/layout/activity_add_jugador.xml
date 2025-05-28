@@ -21,16 +21,9 @@
 
     <Button
         android:id="@+id/btn_guardar_jugador"
-        android:text="Guardar Jugador"
+        android:text="Guardar y Evaluar Jugador"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp" />
-
-    <Button
-        android:id="@+id/btn_evaluar_jugador"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Evaluar Jugador"
-        android:layout_marginTop="16dp" />
 
 </LinearLayout>

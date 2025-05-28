@@ -49,3 +49,34 @@ class ActualizarValoracionView(APIView):
             return Response({'error': 'Jugador no encontrado'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class EvaluacionesPorJugador(APIView):
+    def get(self, request, jugador_id):
+        evaluaciones = Evaluacion.objects.filter(jugador__id=jugador_id)
+        data = {e.accion: e.valoracion for e in evaluaciones}
+        return Response(data)
+
+
+class GuardarEvaluacionesAPIView(APIView):
+    def post(self, request):
+        jugador_id = request.data.get('jugador')
+        evaluaciones = request.data.get('evaluaciones')
+
+        if not jugador_id or not evaluaciones:
+            return Response({'error': 'Datos incompletos'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            jugador = Jugador.objects.get(id=jugador_id)
+        except Jugador.DoesNotExist:
+            return Response({'error': 'Jugador no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+        for accion, valor in evaluaciones.items():
+            Evaluacion.objects.create(
+                jugador=jugador,
+                accion=accion,
+                tipo='ofensiva',  # Puedes hacer esto dinámico si lo necesitas
+                valoracion=valor
+            )
+
+        return Response({'success': True}, status=status.HTTP_201_CREATED)

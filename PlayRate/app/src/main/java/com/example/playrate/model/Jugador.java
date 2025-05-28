@@ -10,11 +10,11 @@ public class Jugador implements Serializable {
     private float valoracionMedia;
     private Map<String, Integer> evaluaciones;
 
-    public Jugador(int id, String nombre, float valoracionMedia) {
+    public Jugador(int id, String nombre, float valoracionMedia, Map<String, Integer> evaluaciones) {
         this.id = id;
         this.nombre = nombre;
         this.valoracionMedia = valoracionMedia;
-        this.evaluaciones = new HashMap<>();
+        this.evaluaciones = evaluaciones;
     }
 
     public int getId() {
