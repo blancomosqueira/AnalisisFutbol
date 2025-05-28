@@ -4,7 +4,6 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <!-- Nombre del principio táctico -->
     <TextView
         android:id="@+id/tvPrincipio"
         android:layout_width="0dp"
@@ -14,41 +13,16 @@
         android:textSize="16sp"
         android:paddingEnd="8dp" />
 
-    <!-- Grupo de opciones de valoración -->
     <RadioGroup
         android:id="@+id/radioGroupPrincipio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/rb1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1" />
-
-        <RadioButton
-            android:id="@+id/rb2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2" />
-
-        <RadioButton
-            android:id="@+id/rb3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3" />
-
-        <RadioButton
-            android:id="@+id/rb4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4" />
-
-        <RadioButton
-            android:id="@+id/rb5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5" />
+        <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1"/>
+        <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2"/>
+        <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="3"/>
+        <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4"/>
+        <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="5"/>
     </RadioGroup>
 </LinearLayout>
