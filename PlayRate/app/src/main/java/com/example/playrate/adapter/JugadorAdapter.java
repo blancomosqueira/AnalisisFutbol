@@ -1,55 +1,57 @@
 package com.example.playrate.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.playrate.R;
 import com.example.playrate.model.Jugador;
-import com.example.playrate.view.JugadorDetailActivity;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class JugadorAdapter extends RecyclerView.Adapter<JugadorAdapter.JugadorViewHolder> {
+public class JugadorAdapter extends RecyclerView.Adapter<JugadorAdapter.ViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Jugador> jugadores;
-    private OnItemLongClickListener longClickListener;
+    private final OnItemLongClickListener listener;
 
-    public JugadorAdapter(Context context, List<Jugador> jugadores, OnItemLongClickListener longClickListener) {
+    public JugadorAdapter(Context context, List<Jugador> jugadores, OnItemLongClickListener listener) {
         this.context = context;
         this.jugadores = jugadores;
-        this.longClickListener = longClickListener;
+        this.listener = listener;
+    }
+
+    public void setJugadores(List<Jugador> nuevosJugadores) {
+        this.jugadores = nuevosJugadores;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public JugadorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public JugadorAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_jugador, parent, false);
-        return new JugadorViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull JugadorViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull JugadorAdapter.ViewHolder holder, int position) {
         Jugador jugador = jugadores.get(position);
         holder.tvNombreJugador.setText(jugador.getNombre());
+        holder.tvValoracion.setText("Valoración media: " + jugador.getValoracionMedia());
 
-        // Manejar el clic en el elemento del RecyclerView
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, JugadorDetailActivity.class);
-            intent.putExtra("jugador", jugador);  // Asegúrate de que el objeto jugador sea serializable
-            context.startActivity(intent);
+        holder.itemView.setOnLongClickListener(v -> {
+            listener.onItemLongClick(jugador);
+            return true;
         });
 
-        // Manejar el clic largo en el elemento
-        holder.itemView.setOnLongClickListener(v -> {
-            longClickListener.onItemLongClick(jugador);
-            return true;
+        holder.btnEliminarJugador.setOnClickListener(v -> {
+            listener.onDeleteClick(jugador);
+        });
+        holder.itemView.setOnClickListener(v -> {
+            listener.onItemClick(jugador);  // 👈 manejar click simple
         });
     }
 
@@ -58,18 +60,15 @@ public class JugadorAdapter extends RecyclerView.Adapter<JugadorAdapter.JugadorV
         return jugadores.size();
     }
 
-    public void setJugadores(List<Jugador> jugadores) {
-        this.jugadores.clear();
-        this.jugadores.addAll(jugadores);
-        notifyDataSetChanged();
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvNombreJugador, tvValoracion;
+        ImageButton btnEliminarJugador;
 
-    public static class JugadorViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNombreJugador;
-
-        public JugadorViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombreJugador = itemView.findViewById(R.id.tvNombreJugador);
+            tvValoracion = itemView.findViewById(R.id.tvValoracion);
+            btnEliminarJugador = itemView.findViewById(R.id.btnEliminarJugador);
         }
     }
 }
