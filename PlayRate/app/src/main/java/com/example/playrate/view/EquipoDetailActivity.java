@@ -1,21 +1,20 @@
 package com.example.playrate.view;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.Toast;
 import com.example.playrate.R;
 import com.example.playrate.adapter.JugadorAdapter;
 import com.example.playrate.adapter.OnItemLongClickListener;
 import com.example.playrate.model.Jugador;
 import com.example.playrate.viewmodel.JugadorViewModel;
 import java.util.ArrayList;
-import java.util.List;
 
 public class EquipoDetailActivity extends AppCompatActivity implements OnItemLongClickListener {
 
@@ -37,7 +36,6 @@ public class EquipoDetailActivity extends AppCompatActivity implements OnItemLon
 
         recyclerViewJugadores.setLayoutManager(new LinearLayoutManager(this));
 
-        // Inicializar el adaptador pasando el contexto y el listener
         jugadorAdapter = new JugadorAdapter(this, new ArrayList<>(), this);
         recyclerViewJugadores.setAdapter(jugadorAdapter);
 
@@ -70,6 +68,18 @@ public class EquipoDetailActivity extends AppCompatActivity implements OnItemLon
     @Override
     public void onItemLongClick(Jugador jugador) {
         showDeleteDialog(jugador.getId());
+    }
+
+    @Override
+    public void onDeleteClick(Jugador jugador) {
+        showDeleteDialog(jugador.getId());
+    }
+
+    @Override
+    public void onItemClick(Jugador jugador) {
+        Intent intent = new Intent(this, JugadorDetailActivity.class);
+        intent.putExtra("jugador", jugador);
+        startActivity(intent);
     }
 
     private void showDeleteDialog(int jugadorId) {
