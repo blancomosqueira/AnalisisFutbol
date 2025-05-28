@@ -96,11 +96,7 @@ Esta app está en continuo crecimiento. Próximas funciones:
 
 ### Backend (Django)
 1. Clona el repositorio
-2. Instala las dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Ejecuta el servidor:
+2. Ejecuta el servidor:
    ```bash
    python manage.py runserver
    ```
