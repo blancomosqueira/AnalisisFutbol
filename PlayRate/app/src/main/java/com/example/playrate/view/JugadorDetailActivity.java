@@ -40,7 +40,7 @@ public class JugadorDetailActivity extends AppCompatActivity {
         // Configurar el botón de editar valoración
         btnEditarValoracion.setOnClickListener(v -> {
             Intent intent = new Intent(this, EditarValoracionActivity.class);
-            intent.putExtra("jugador", jugador);
+            intent.putExtra("jugador_id", jugador.getId());
             startActivity(intent);
         });
     }

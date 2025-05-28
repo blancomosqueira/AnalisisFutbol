@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,20 @@ public class JugadorRepository {
                             int id = obj.getInt("id");
                             String nombre = obj.getString("nombre");
                             float valoracionMedia = (float) obj.getDouble("valoracion_media");
-                            jugadores.add(new Jugador(id, nombre, valoracionMedia));
+
+                            // Obtener evaluaciones si existen
+                            Map<String, Integer> evaluaciones = new HashMap<>();
+                            if (obj.has("evaluaciones") && !obj.isNull("evaluaciones")) {
+                                JSONObject evaluacionesJson = obj.getJSONObject("evaluaciones");
+                                Iterator<String> keys = evaluacionesJson.keys();
+                                while (keys.hasNext()) {
+                                    String key = keys.next();
+                                    evaluaciones.put(key, evaluacionesJson.getInt(key));
+                                }
+                            }
+
+                            // Crear jugador con evaluaciones
+                            jugadores.add(new Jugador(id, nombre, valoracionMedia, evaluaciones));
                         }
                         liveData.postValue(jugadores);
                     } catch (Exception e) {
@@ -44,6 +58,7 @@ public class JugadorRepository {
 
         VolleySingleton.getInstance(context).getRequestQueue().add(request);
     }
+
     public void eliminarJugador(Context context, int jugadorId, MutableLiveData<Boolean> result) {
         String url = "http://10.0.2.2:8000/api/jugadores/" + jugadorId + "/";
         StringRequest request = new StringRequest(Request.Method.DELETE, url,
