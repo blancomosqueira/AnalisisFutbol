@@ -4,6 +4,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.playrate.model.Equipo;
 import com.example.playrate.utils.VolleySingleton;
 import org.json.JSONArray;
@@ -45,4 +46,17 @@ public class EquipoRepository {
 
         VolleySingleton.getInstance(context).getRequestQueue().add(request);
     }
+    public void eliminarEquipo(Context context, int equipoId, MutableLiveData<Boolean> result) {
+        String url = "http://10.0.2.2:8000/api/equipos/" + equipoId + "/";
+
+        StringRequest request = new StringRequest(Request.Method.DELETE, url,
+                response -> result.postValue(true),
+                error -> {
+                    error.printStackTrace();
+                    result.postValue(false);
+                });
+
+        VolleySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
 }
