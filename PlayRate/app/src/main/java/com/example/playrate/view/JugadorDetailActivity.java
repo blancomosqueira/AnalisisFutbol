@@ -67,8 +67,10 @@ public class JugadorDetailActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        recargarEvaluaciones(); // Al volver de editar, se actualizan los datos
+        recargarJugador();
+        recargarEvaluaciones();
     }
+
 
     private void recargarEvaluaciones() {
         String url = "http://10.0.2.2:8000/api/jugadores/" + jugadorId + "/evaluaciones/";
@@ -95,6 +97,40 @@ public class JugadorDetailActivity extends AppCompatActivity {
 
         VolleySingleton.getInstance(this).getRequestQueue().add(request);
     }
+    private void recargarJugador() {
+        String url = "http://10.0.2.2:8000/api/jugadores/" + jugadorId + "/";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        String nombre = response.getString("nombre");
+                        double media = response.getDouble("valoracion_media");
+
+                        jugador.setNombre(nombre);
+                        jugador.setValoracionMedia((float) media);
+
+                        TextView tvNombre = findViewById(R.id.tvJugadorNombre);
+                        TextView tvMedia = findViewById(R.id.tvValoracionMedia);
+                        if (tvNombre != null) {
+                            tvNombre.setText("Nombre: " + nombre);
+                        }
+                        if (tvMedia != null) {
+                            tvMedia.setText("Media: " + String.format("%.2f", media));
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    error.printStackTrace();
+                    Toast.makeText(this, "Error al recargar datos del jugador", Toast.LENGTH_SHORT).show();
+                });
+
+        VolleySingleton.getInstance(this).getRequestQueue().add(request);
+    }
+
+
 
     private void mostrarInformacionJugador() {
 
