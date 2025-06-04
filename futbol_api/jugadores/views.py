@@ -79,4 +79,9 @@ class GuardarEvaluacionesAPIView(APIView):
                 valoracion=valor
             )
 
+        valores = list(evaluaciones.values())
+        media = sum(valores) / len(valores)
+        jugador.valoracion_media = media
+        jugador.save()
+
         return Response({'success': True}, status=status.HTTP_201_CREATED)
