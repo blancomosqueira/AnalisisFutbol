@@ -67,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        equipoViewModel.cargarEquipos(this); // 🔁 vuelve a pedir la lista
+    }
     private void showDeleteEquipoDialog(int equipoId) {
         new AlertDialog.Builder(this)
                 .setTitle("Eliminar equipo")
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         equipoViewModel.eliminarEquipo(equipoId).observe(this, success -> {
             if (success) {
                 Toast.makeText(this, "Equipo eliminado", Toast.LENGTH_SHORT).show();
-                cargarEquipos();
+                equipoViewModel.cargarEquipos(this);
             } else {
                 Toast.makeText(this, "Error al eliminar el equipo", Toast.LENGTH_SHORT).show();
             }

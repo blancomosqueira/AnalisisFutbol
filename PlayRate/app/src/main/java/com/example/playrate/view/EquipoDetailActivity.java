@@ -25,6 +25,12 @@ public class EquipoDetailActivity extends AppCompatActivity implements OnItemLon
     private Button btnAddJugador;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        cargarJugadores();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipo_detail);

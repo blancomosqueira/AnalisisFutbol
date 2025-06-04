@@ -18,6 +18,16 @@
             android:textSize="22sp"
             android:textColor="#0D47A1"
             android:paddingBottom="12dp" />
+        <TextView
+            android:id="@+id/tvValoracionMedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Media: 0.0"
+            android:textSize="18sp"
+            android:textColor="#1565C0"
+            android:paddingBottom="16dp" />
+
+
 
         <LinearLayout
             android:id="@+id/layoutContainer"

@@ -1,12 +1,16 @@
 package com.example.playrate.viewmodel;
 
 import android.app.Application;
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
 import com.example.playrate.model.Equipo;
 import com.example.playrate.repository.EquipoRepository;
+
 import java.util.List;
 
 public class EquipoViewModel extends AndroidViewModel {
@@ -18,23 +22,21 @@ public class EquipoViewModel extends AndroidViewModel {
         super(application);
         System.out.println("EquipoViewModel: Constructor inicializado");
         repository = new EquipoRepository();
-        cargarEquipos(application);
+        cargarEquipos(application.getApplicationContext()); // carga inicial
     }
 
-    private void cargarEquipos(Application application) {
+    public void cargarEquipos(Context context) {
         System.out.println("EquipoViewModel: Cargando equipos desde el repositorio...");
-        repository.obtenerEquipos(application.getApplicationContext(), equipos);
+        repository.obtenerEquipos(context, equipos);
     }
 
-    public MutableLiveData<List<Equipo>> getEquipos() {
-        cargarEquipos(getApplication());
+    public LiveData<List<Equipo>> getEquipos() {
         return equipos;
     }
+
     public LiveData<Boolean> eliminarEquipo(int equipoId) {
         MutableLiveData<Boolean> result = new MutableLiveData<>();
         repository.eliminarEquipo(getApplication().getApplicationContext(), equipoId, result);
         return result;
     }
-
-
 }
